@@ -1,19 +1,5 @@
-/** Loaded from unpkg at runtime */
-interface LeafletMap {
-  attributionControl: { setPrefix: (v: string) => void };
-  setView: (center: [number, number], zoom: number) => void;
-  invalidateSize: () => void;
-  whenReady: (fn: () => void) => void;
-}
-
-interface LeafletTileLayer {
-  addTo: (map: LeafletMap) => void;
-}
-
-interface LeafletGlobal {
-  map: (el: HTMLElement, options: Record<string, unknown>) => LeafletMap;
-  tileLayer: (url: string, options: Record<string, unknown>) => LeafletTileLayer;
-}
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 
 const newsTrigger = document.querySelector(".news-trigger");
 const newsModal = document.querySelector("#latest-news-modal");
@@ -44,45 +30,12 @@ if (newsClose instanceof HTMLButtonElement && newsModal instanceof HTMLDialogEle
   });
 }
 
-function loadCss(href: string): Promise<void> {
-  if (document.querySelector(`link[href="${href}"]`)) return Promise.resolve();
-  return new Promise((resolve, reject) => {
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = href;
-    link.onload = () => resolve();
-    link.onerror = () => reject(new Error("leaflet-css"));
-    document.head.appendChild(link);
-  });
-}
-
-function loadScript(src: string): Promise<void> {
-  return new Promise((resolve, reject) => {
-    const script = document.createElement("script");
-    script.src = src;
-    script.async = true;
-    script.onload = () => resolve();
-    script.onerror = () => reject(new Error("leaflet-js"));
-    document.head.appendChild(script);
-  });
-}
-
 /** Bump when the tile URL or map behavior changes so a full reload picks up the new layer */
-const CONTACT_MAP_REV = "map-attrib-inline-9";
+const CONTACT_MAP_REV = "map-local-leaflet-10";
 
 async function initContactMap(): Promise<void> {
   const el = document.getElementById("contact-map-host");
   if (!el || el.dataset.contactMapRev === CONTACT_MAP_REV) return;
-
-  try {
-    await loadCss("https://unpkg.com/leaflet@1.9.4/dist/leaflet.css");
-    await loadScript("https://unpkg.com/leaflet@1.9.4/dist/leaflet.js");
-  } catch {
-    return;
-  }
-
-  const L = (window as unknown as { L?: LeafletGlobal }).L;
-  if (!L) return;
 
   const lat = Number.parseFloat(el.dataset.lat ?? "51.53194");
   const lng = Number.parseFloat(el.dataset.lng ?? "17.27548");
@@ -96,7 +49,6 @@ async function initContactMap(): Promise<void> {
     doubleClickZoom: false,
     boxZoom: false,
     keyboard: false,
-    tap: false,
     touchZoom: false,
     zoomSnap: 0.25
   });

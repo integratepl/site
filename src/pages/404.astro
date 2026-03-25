@@ -1,0 +1,25 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const siteHref = (Astro.site ?? new URL("https://integrate.pl/")).href;
+const canonical = new URL("/404", siteHref).href;
+const title = "Page not found";
+const description = "The page you are looking for does not exist.";
+---
+
+<Layout
+  title={title}
+  description={description}
+  canonical={canonical}
+  siteHref={siteHref}
+  noindex={true}
+>
+  <main class="panel" style="min-height: 260px; display: grid; gap: 12px; align-content: center;">
+    <p class="section-label">404</p>
+    <h1 style="margin: 0;">Page not found</h1>
+    <p style="margin: 0; color: var(--muted);">The address is invalid or the page has been moved.</p>
+    <p style="margin: 0;">
+      <a href="/" style="text-decoration: underline; text-underline-offset: 2px;">Go back to homepage</a>
+    </p>
+  </main>
+</Layout>

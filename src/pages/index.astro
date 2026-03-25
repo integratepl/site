@@ -18,6 +18,7 @@ const pageDescription =
 
 const keywords =
   "Integrate.pl, industrial integration, home automation, Modbus, Zigbee, MQTT, modbus2hue, automodbus, zigbee2any, zigbee2any-mqtt, Milicz, Poland";
+const ogImage = new URL("/og.svg", siteHref).href;
 
 const jsonLd = buildHomeJsonLd({
   siteHref,
@@ -36,6 +37,7 @@ const jsonLd = buildHomeJsonLd({
   canonical={canonical}
   siteHref={siteHref}
   keywords={keywords}
+  ogImage={ogImage}
   jsonLd={jsonLd}
 >
   <main class="grid">

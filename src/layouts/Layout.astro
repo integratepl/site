@@ -47,6 +47,9 @@ const origin = siteHref.replace(/\/$/, "");
     <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
     <meta name="author" content="Integrate.pl" />
     <meta name="theme-color" content="#ffffff" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <link rel="manifest" href="/site.webmanifest" />
 
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content="Integrate" />
@@ -68,7 +71,7 @@ const origin = siteHref.replace(/\/$/, "");
 
     <link rel="me" href="https://github.com/integratepl" />
 
-    {jsonLd ? <script type="application/ld+json" set:html={jsonLd} /> : null}
+    {jsonLd ? <script is:inline type="application/ld+json" set:html={jsonLd} /> : null}
   </head>
   <body>
     <div class="shell">

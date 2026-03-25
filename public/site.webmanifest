@@ -1,0 +1,16 @@
+{
+  "name": "Integrate",
+  "short_name": "Integrate",
+  "description": "Software for connected systems.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#ffffff"/>
+  <rect x="48" y="48" width="1104" height="534" fill="none" stroke="#111111" stroke-width="6"/>
+  <g opacity="0.16" stroke="#111111" stroke-width="1">
+    <path d="M48 120H1152M48 192H1152M48 264H1152M48 336H1152M48 408H1152M48 480H1152M48 552H1152"/>
+    <path d="M120 48V582M264 48V582M408 48V582M552 48V582M696 48V582M840 48V582M984 48V582"/>
+  </g>
+  <text x="96" y="268" fill="#111111" font-size="88" font-family="Inter, Arial, sans-serif" font-weight="700">
+    Integrate.pl
+  </text>
+  <text x="96" y="336" fill="#5a5a5a" font-size="38" font-family="Inter, Arial, sans-serif">
+    We build software for connected systems.
+  </text>
+  <text x="96" y="404" fill="#5a5a5a" font-size="28" font-family="Inter, Arial, sans-serif">
+    Integration and automation for homes and industry
+  </text>
+</svg>
