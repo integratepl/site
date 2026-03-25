@@ -32,11 +32,11 @@ SEO (meta, JSON-LD) is wired from `src/pages/index.astro` + `src/lib/seo-jsonld.
 
 ## CI
 
-- **Feature branches** (`push`, wszystko poza `main`): `.github/workflows/branch-ci.yml` — `npm run check` + `npm run build` (bez deployu).
-- **`main`**: `.github/workflows/deploy.yml` — ten sam check + build, potem **GitHub Pages**.
+- **Non-`main` branches** (on `push`): `.github/workflows/branch-ci.yml` runs `npm run check` and `npm run build` (no deploy).
+- **`main`** (on `push`): `.github/workflows/deploy.yml` runs the same checks, then publishes to **GitHub Pages**.
 
 ## Deploy
 
-Push to `main`: workflow **Deploy site** publikuje na **GitHub Pages**. W repozytorium: **Settings → Pages → Source: GitHub Actions**.
+Pushing to `main` runs **Deploy site**, which publishes to **GitHub Pages**. In the repo: **Settings → Pages → Source: GitHub Actions**.
 
-Zalecane: **Settings → Branches** → ochrona `main` z wymaganym statusem joba **`build`** w workflowu **Deploy site**.
+Recommended: **Settings → Branches** → protect `main` and require the **`build`** job from **Deploy site** to pass before merging.

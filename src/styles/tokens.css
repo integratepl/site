@@ -85,7 +85,7 @@
   --contact-meta-min-height: min(280px, max(200px, 55vw));
   --contact-map-filter: grayscale(1) saturate(0.5) contrast(1.08) brightness(1);
   --leaflet-attribution-size: 9px;
-  /* Ramka na mapie (adres, NIP) + tekst przycisku e-mail — jeden zestaw */
+  /* Map card (address, VAT) + mail CTA — shared body text tokens */
   --contact-card-body-text: var(--muted);
   --contact-card-body-size: 0.9rem;
   --contact-card-body-leading: 1.5;
