@@ -34,7 +34,14 @@ jobs:
       - name: Astro and TypeScript check
         run: npm run check
 
+      - name: Sync GitHub releases into content
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run sync:github-releases
+
       - name: Production build
+        env:
+          CI: "true"
         run: npm run build
 
       - name: Upload Pages artifact

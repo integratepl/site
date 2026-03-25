@@ -1,6 +1,6 @@
 ---
 import FaqModal from "../components/home/FaqModal.astro";
-import { faqItems, faqModalTitle } from "../data/home";
+import { getFaq } from "../lib/site-content";
 import "../styles/tokens.css";
 import "../styles/base.css";
 /* FAQ lives in Layout; shared dialog styles (also used on the homepage via home/index.css). */
@@ -37,6 +37,8 @@ const ogLocale = "en_GB";
 const ogType = "website";
 const pageTitle = title.includes("Integrate") ? title : `${title} | Integrate`;
 const origin = siteHref.replace(/\/$/, "");
+
+const faq = await getFaq();
 ---
 
 <!doctype html>
@@ -108,7 +110,7 @@ const origin = siteHref.replace(/\/$/, "");
         </div>
       </footer>
 
-      <FaqModal title={faqModalTitle} items={faqItems} />
+      <FaqModal title={faq.modalTitle} items={faq.items} />
     </div>
 
     <script>

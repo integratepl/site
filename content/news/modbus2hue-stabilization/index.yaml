@@ -1,0 +1,12 @@
+slug: modbus2hue-stabilization
+sortOrder: 10
+title: modbus2hue stabilization work underway
+teaser: >-
+  We are currently focused on stabilization work and expect the first public
+  release soon.
+content: >-
+  Current work on modbus2hue is focused on stabilization and preparing the project for release.
+
+  The goal is to make the first release solid, reliable, and ready for real-world use.
+
+  If everything stays on track, the first public release is expected soon.

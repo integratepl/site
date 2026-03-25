@@ -80,7 +80,7 @@ export function buildHomeJsonLd(p: HomeJsonLdParams): string {
         description: project.description,
         applicationCategory: "DeveloperApplication",
         applicationSubCategory: project.kind,
-        url: `${site}/#${project.name}`
+        url: `${site}/#${project.slug}`
       }
     }))
   };

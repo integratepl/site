@@ -58,6 +58,10 @@
   line-height: 1.6;
 }
 
+.news-modal-body {
+  white-space: pre-line;
+}
+
 .modal-close-btn {
   padding: 12px var(--panel-padding-x);
   border: 0;
@@ -79,6 +83,59 @@
   font-family: var(--font-mono);
 }
 
+.project-modal-version-row {
+  margin: 0;
+}
+
+.project-modal-version-row:not([hidden]) {
+  margin-bottom: 6px;
+}
+
+.project-modal-version-row[hidden] {
+  display: none !important;
+}
+
+.project-modal-release-head-row[hidden] {
+  display: none !important;
+}
+
+.project-modal-release-head-row:not([hidden]) {
+  margin-bottom: 14px;
+}
+
+.project-modal-version-label {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: var(--section-label-tracking);
+  font-family: var(--font-mono);
+  color: var(--text);
+}
+
+.project-modal-version {
+  min-width: min(100%, 280px);
+  padding: 8px 10px;
+  border: var(--layout-stroke) solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.88rem;
+}
+
+.project-modal-release-notes {
+  margin: 0;
+  padding: 10px 12px;
+  border: var(--layout-stroke) solid var(--border);
+  background: var(--panel-strong);
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: min(40vh, 320px);
+  overflow-y: auto;
+}
+
 .project-modal-section {
   display: grid;
   gap: 8px;
@@ -91,9 +148,47 @@
   display: none !important;
 }
 
-.project-modal-section:first-of-type {
+.project-modal-content > .project-modal-section:first-of-type {
   border-top: 0;
   padding-top: 0;
+}
+
+#project-modal-license-section + .project-modal-releases-block {
+  border-top: 0;
+  padding-top: 0;
+  margin-top: 10px;
+}
+
+.project-modal-releases-block {
+  /* Match `.project-modal-section` gap between subhead and content (e.g. release notes + box). */
+  gap: 8px;
+}
+
+.project-modal-releases-block > .project-modal-subsection {
+  border-top: 1px solid var(--border-soft);
+  padding-top: 10px;
+  margin-top: 2px;
+}
+
+.project-modal-releases-block > .project-modal-subsection:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+  margin-top: 0;
+}
+
+#project-modal-docker-section.project-modal-subsection,
+#project-modal-binaries-assets-section.project-modal-subsection {
+  border-top: 0;
+  padding-top: 0;
+  margin-top: 0;
+}
+
+#project-modal-notes-section:not([hidden]) + #project-modal-docker-section {
+  margin-top: 16px;
+}
+
+#project-modal-docker-section:not([hidden]) + #project-modal-binaries-assets-section {
+  margin-top: 16px;
 }
 
 .project-modal-subhead {
@@ -125,6 +220,88 @@
   word-break: break-all;
 }
 
+.project-modal-releases-root {
+  display: grid;
+  gap: 16px;
+}
+
+.project-modal-releases-hub {
+  margin: 0;
+}
+
+.project-modal-release {
+  display: grid;
+  gap: 8px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.project-modal-release:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.project-modal-release--extra {
+  padding-top: 4px;
+}
+
+.project-modal-release-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 12px;
+}
+
+.project-modal-release-head-row .project-modal-release-head {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.project-modal-release-title {
+  margin: 0;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.project-modal-release-title:hover {
+  color: var(--muted);
+}
+
+.project-modal-release-date {
+  font-size: 0.76rem;
+  color: var(--muted);
+  font-family: var(--font-mono);
+}
+
+.project-modal-release-empty {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.project-modal-release-extra-head {
+  margin: 0;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: var(--section-label-tracking);
+  font-family: var(--font-mono);
+  color: var(--text);
+}
+
+.project-modal-release-assets {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: grid;
+  gap: 4px;
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
 .project-modal-links {
   display: flex;
   flex-wrap: wrap;
@@ -154,7 +331,7 @@
   line-height: 1.6;
 }
 
-/* FAQ modal (content from `faqItems` in data/home.ts) */
+/* FAQ modal (Keystatic singleton `faq` → `src/content/singletons/faq/`) */
 .faq-list {
   margin: 0;
   display: grid;

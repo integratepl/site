@@ -7,7 +7,13 @@ import HomeContact from "../components/home/HomeContact.astro";
 import LatestNewsModal from "../components/home/LatestNewsModal.astro";
 import ProjectModal from "../components/home/ProjectModal.astro";
 import { buildHomeJsonLd } from "../lib/seo-jsonld";
-import { contactEmail, contactMap, contactMeta, latestNews, projects } from "../data/home";
+import {
+  getContactEmail,
+  getContactMap,
+  getContactMeta,
+  getNews,
+  getProjects
+} from "../lib/site-content";
 import "../styles/home/index.css";
 
 const siteHref = (Astro.site ?? new URL("https://integrate.pl/")).href;
@@ -20,6 +26,14 @@ const pageDescription =
 const keywords =
   "Integrate.pl, industrial integration, home automation, Modbus, Zigbee, MQTT, modbus2hue, automodbus, zigbee2any, zigbee2any-mqtt, Milicz, Poland";
 const ogImage = new URL("/og.svg", siteHref).href;
+
+const [projects, news, contactMeta, contactMap, contactEmail] = await Promise.all([
+  getProjects(),
+  getNews(),
+  getContactMeta(),
+  getContactMap(),
+  getContactEmail()
+]);
 
 const jsonLd = buildHomeJsonLd({
   siteHref,
@@ -43,15 +57,15 @@ const jsonLd = buildHomeJsonLd({
 >
   <main class="grid">
     <HomeIntro />
-    <HomeLatest news={latestNews} />
+    <HomeLatest news={news} />
     <HomeProjects projects={projects} />
-    <HomeContact meta={contactMeta} map={contactMap} />
+    <HomeContact meta={contactMeta} map={contactMap} contactEmail={contactEmail} />
   </main>
 
-  <LatestNewsModal news={latestNews} />
+  <LatestNewsModal items={news} />
   <ProjectModal projects={projects} />
-</Layout>
 
-<script>
-  import "../scripts/home-client.ts";
-</script>
+  <script>
+    import "../scripts/home-client.ts";
+  </script>
+</Layout>

@@ -1,0 +1,7 @@
+slug: modbus2hue
+sortOrder: 10
+kind: Bridge
+description: Bring Philips Hue lighting into any building automation system — without custom integration work. Exposes Hue resources as native Modbus registers over RTU and TCP.
+githubRepo: integratepl/modbus2hue
+licensePrice: Lifetime license, single payment — contact hello@integrate.pl for pricing
+releasesFromGithub: []

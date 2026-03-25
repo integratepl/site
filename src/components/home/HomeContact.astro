@@ -1,14 +1,14 @@
 ---
 import type { ContactMap, ContactMeta } from "../../data/home";
-import { contactEmail } from "../../data/home";
 import SectionHeadSplit from "./SectionHeadSplit.astro";
 
 interface Props {
   meta: ContactMeta;
   map: ContactMap;
+  contactEmail: string;
 }
 
-const { meta, map } = Astro.props;
+const { meta, map, contactEmail } = Astro.props;
 ---
 
 <section id="contact" class="contact panel">

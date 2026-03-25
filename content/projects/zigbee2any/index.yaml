@@ -1,0 +1,7 @@
+slug: zigbee2any
+sortOrder: 30
+kind: Integration stack
+description: Make any Zigbee device available to any system — regardless of protocol. A standalone daemon exposing a unified API for bridges, services, and transport layers.
+githubRepo: zigbee2any
+releasesFromGithub: []
+

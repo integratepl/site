@@ -1,0 +1,8 @@
+slug: automodbus
+sortOrder: 20
+kind: Framework
+description: A runtime for connecting devices once and reusing that integration everywhere. Deterministic Modbus mapping layer designed for consistent, production-grade deployments.
+githubRepo: ""
+licensePrice: ""
+releasesFromGithub: []
+

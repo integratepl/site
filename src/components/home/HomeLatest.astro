@@ -2,7 +2,7 @@
 import type { LatestNews } from "../../data/home";
 
 interface Props {
-  news: LatestNews;
+  news: LatestNews[];
 }
 
 const { news } = Astro.props;
@@ -10,16 +10,27 @@ const { news } = Astro.props;
 
 <section id="latest" class="latest panel">
   <p class="section-label">Latest</p>
-  <article class="news-item">
-    <h2 class="news-title">{news.title}</h2>
-    <p class="news-teaser">{news.teaser}</p>
-    <button
-      type="button"
-      class="news-trigger"
-      aria-haspopup="dialog"
-      aria-controls="latest-news-modal"
-    >
-      Read more
-    </button>
-  </article>
+  {
+    news.length === 0 ? (
+      <p class="news-teaser news-empty">No updates yet.</p>
+    ) : (
+      <ul class="news-list">
+        {news.map((item) => (
+          <li class="news-item">
+            <h2 class="news-title">{item.title}</h2>
+            <p class="news-teaser">{item.teaser}</p>
+            <button
+              type="button"
+              class="news-trigger"
+              aria-haspopup="dialog"
+              aria-controls="latest-news-modal"
+              data-news-slug={item.slug}
+            >
+              Read more
+            </button>
+          </li>
+        ))}
+      </ul>
+    )
+  }
 </section>

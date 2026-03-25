@@ -6,16 +6,29 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "build:static": "CI=true astro build",
     "preview": "astro preview",
-    "check": "astro check"
+    "check": "astro check",
+    "sync:github-releases": "tsx scripts/sync-github-releases.ts"
   },
   "dependencies": {
+    "@astrojs/markdoc": "^0.15.11",
+    "@astrojs/react": "^4.4.2",
     "@astrojs/sitemap": "^3.7.1",
+    "@keystatic/astro": "^5.0.6",
+    "@keystatic/core": "^0.5.49",
+    "@keystar/ui": "^0.7.20",
     "astro": "^5.5.5",
-    "leaflet": "^1.9.4"
+    "leaflet": "^1.9.4",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.8",
-    "@types/leaflet": "^1.9.21"
+    "@types/leaflet": "^1.9.21",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "tsx": "^4.19.3",
+    "yaml": "^2.7.1"
   }
 }

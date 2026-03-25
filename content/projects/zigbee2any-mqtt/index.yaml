@@ -1,0 +1,8 @@
+slug: zigbee2any-mqtt
+sortOrder: 40
+kind: Transport
+description: Connect Zigbee devices to MQTT-based platforms, cloud services, and home automation hubs. A transport layer built on zigbee2any — drop-in compatible with standard MQTT brokers.
+githubRepo: integratepl/zigbee2any-mqtt
+licensePrice: Lifetime license, single payment — contact hello@integrate.pl for pricing
+releasesFromGithub: []
+
