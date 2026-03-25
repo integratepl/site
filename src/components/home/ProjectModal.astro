@@ -1,0 +1,89 @@
+---
+import type { Project } from "../../data/home";
+
+interface Props {
+  projects: Project[];
+}
+
+const { projects } = Astro.props;
+
+const payload = projects.map((p) => ({
+  name: p.name,
+  kind: p.kind,
+  description: p.description,
+  dockerImage: p.dockerImage ?? null,
+  releaseUrl: p.releaseUrl ?? null,
+  binaryLinuxAmd64Url: p.binaryLinuxAmd64Url ?? null,
+  binaryLinuxArm64Url: p.binaryLinuxArm64Url ?? null,
+  licensePrice: p.licensePrice ?? null
+}));
+
+const projectModalJson = JSON.stringify(payload).replace(/</g, "\\u003c");
+---
+
+<dialog id="project-modal" class="project-modal" aria-labelledby="project-modal-title">
+  <div class="project-modal-inner">
+    <div class="project-modal-head">
+      <p class="section-label">Project</p>
+      <button type="button" class="modal-close-btn" data-project-modal-close aria-label="Close project details">
+        Close
+      </button>
+    </div>
+    <p class="project-modal-kind" id="project-modal-kind"></p>
+    <h2 id="project-modal-title"></h2>
+    <div class="project-modal-content">
+      <p id="project-modal-description"></p>
+
+      <section
+        id="project-modal-docker-section"
+        class="project-modal-section"
+        aria-labelledby="project-docker-heading"
+        hidden
+      >
+        <h3 class="project-modal-subhead" id="project-docker-heading">Docker image (GHCR)</h3>
+        <p class="project-modal-hint">Pull with Docker.</p>
+        <pre class="project-modal-code"><code id="project-modal-docker"></code></pre>
+      </section>
+
+      <section
+        id="project-modal-binaries-section"
+        class="project-modal-section"
+        aria-labelledby="project-binaries-heading"
+        hidden
+      >
+        <h3 class="project-modal-subhead" id="project-binaries-heading">Binary releases</h3>
+        <p class="project-modal-hint">Pre-built binaries for linux/amd64 and linux/arm64 when published on GitHub Releases.</p>
+        <div class="project-modal-links">
+          <a id="project-modal-link-amd64" class="project-modal-link" href="#" target="_blank" rel="noopener noreferrer" hidden>
+            linux/amd64
+          </a>
+          <a id="project-modal-link-arm64" class="project-modal-link" href="#" target="_blank" rel="noopener noreferrer" hidden>
+            linux/arm64
+          </a>
+          <a
+            id="project-modal-link-releases"
+            class="project-modal-link project-modal-link--primary"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            hidden
+          >
+            GitHub Releases
+          </a>
+        </div>
+      </section>
+
+      <section
+        id="project-modal-license-section"
+        class="project-modal-section"
+        aria-labelledby="project-license-heading"
+        hidden
+      >
+        <h3 class="project-modal-subhead" id="project-license-heading">License</h3>
+        <p id="project-modal-license"></p>
+      </section>
+    </div>
+  </div>
+</dialog>
+
+<script is:inline type="application/json" id="project-modal-data" set:html={projectModalJson} />

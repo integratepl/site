@@ -69,6 +69,21 @@ a {
   color: var(--text);
 }
 
+.footer-faq-btn {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.footer-faq-btn:hover {
+  color: var(--text);
+}
+
 .footer-github {
   display: inline-flex;
   align-items: center;

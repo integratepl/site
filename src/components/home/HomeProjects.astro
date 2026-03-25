@@ -14,7 +14,15 @@ const { projects } = Astro.props;
   <div class="project-grid">
     {
       projects.map((project) => (
-        <article class="project-card" id={project.name}>
+        <article
+          class="project-card project-card--interactive"
+          id={project.name}
+          role="button"
+          tabindex="0"
+          aria-haspopup="dialog"
+          aria-controls="project-modal"
+          data-project={project.name}
+        >
           <div class="project-top">
             <span class="project-kind">{project.kind}</span>
             <h2>{project.name}</h2>

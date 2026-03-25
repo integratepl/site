@@ -1,6 +1,10 @@
 ---
+import FaqModal from "../components/home/FaqModal.astro";
+import { faqItems, faqModalTitle } from "../data/home";
 import "../styles/tokens.css";
 import "../styles/base.css";
+/* FAQ lives in Layout; shared dialog styles (also used on the homepage via home/index.css). */
+import "../styles/home/modal.css";
 
 interface Props {
   title?: string;
@@ -78,7 +82,14 @@ const origin = siteHref.replace(/\/$/, "");
       <slot />
 
       <footer class="panel footer">
-        <span>We build software for connected systems.</span>
+        <button
+          type="button"
+          class="footer-faq-btn"
+          aria-haspopup="dialog"
+          aria-controls="faq-modal"
+        >
+          FAQ
+        </button>
         <div class="footer-links">
           <a href={origin}>integrate.pl</a>
           <a
@@ -96,6 +107,12 @@ const origin = siteHref.replace(/\/$/, "");
           </a>
         </div>
       </footer>
+
+      <FaqModal title={faqModalTitle} items={faqItems} />
     </div>
+
+    <script>
+      import "../scripts/footer-faq.ts";
+    </script>
   </body>
 </html>

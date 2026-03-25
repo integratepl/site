@@ -1,0 +1,36 @@
+---
+import type { FaqItem } from "../../data/home";
+
+interface Props {
+  title: string;
+  items: FaqItem[];
+}
+
+const { title, items } = Astro.props;
+---
+
+<dialog id="faq-modal" class="news-modal" aria-labelledby="faq-modal-title">
+  <div class="news-modal-inner">
+    <div class="news-modal-head">
+      <p class="section-label">FAQ</p>
+      <button type="button" class="modal-close-btn" data-faq-modal-close aria-label="Close FAQ">Close</button>
+    </div>
+    <h2 id="faq-modal-title">{title}</h2>
+    <div class="news-modal-content faq-modal-body">
+      {
+        items.length === 0 ? (
+          <p class="faq-empty">No questions listed yet.</p>
+        ) : (
+          <dl class="faq-list">
+            {items.map((item) => (
+              <div class="faq-item">
+                <dt class="faq-question">{item.question}</dt>
+                <dd class="faq-answer">{item.answer}</dd>
+              </div>
+            ))}
+          </dl>
+        )
+      }
+    </div>
+  </div>
+</dialog>

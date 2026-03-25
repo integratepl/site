@@ -1,6 +1,8 @@
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
+import { closeDialogOnBackdropPointer } from "./dialog-backdrop-close";
+
 const newsTrigger = document.querySelector(".news-trigger");
 const newsModal = document.querySelector("#latest-news-modal");
 const newsClose = document.querySelector(".news-close");
@@ -16,18 +18,7 @@ if (newsClose instanceof HTMLButtonElement && newsModal instanceof HTMLDialogEle
     newsModal.close();
   });
 
-  newsModal.addEventListener("click", (event) => {
-    const bounds = newsModal.getBoundingClientRect();
-    const isOutside =
-      event.clientX < bounds.left ||
-      event.clientX > bounds.right ||
-      event.clientY < bounds.top ||
-      event.clientY > bounds.bottom;
-
-    if (isOutside) {
-      newsModal.close();
-    }
-  });
+  closeDialogOnBackdropPointer(newsModal);
 }
 
 /** Bump when the tile URL or map behavior changes so a full reload picks up the new layer */
@@ -76,3 +67,169 @@ async function initContactMap(): Promise<void> {
 }
 
 void initContactMap();
+
+type ProjectModalEntry = {
+  name: string;
+  kind: string;
+  description: string;
+  dockerImage: string | null;
+  releaseUrl: string | null;
+  binaryLinuxAmd64Url: string | null;
+  binaryLinuxArm64Url: string | null;
+  licensePrice: string | null;
+};
+
+function wireProjectModal(): void {
+  const dataEl = document.getElementById("project-modal-data");
+  const projectModal = document.querySelector("#project-modal");
+  if (!dataEl?.textContent?.trim() || !(projectModal instanceof HTMLDialogElement)) return;
+
+  let entries: ProjectModalEntry[];
+  try {
+    entries = JSON.parse(dataEl.textContent) as ProjectModalEntry[];
+  } catch {
+    return;
+  }
+
+  const byName = new Map(entries.map((e) => [e.name, e]));
+
+  const kindEl = document.getElementById("project-modal-kind");
+  const titleEl = document.getElementById("project-modal-title");
+  const descEl = document.getElementById("project-modal-description");
+  const dockerSection = document.getElementById("project-modal-docker-section");
+  const dockerEl = document.getElementById("project-modal-docker");
+  const binariesSection = document.getElementById("project-modal-binaries-section");
+  const licenseSection = document.getElementById("project-modal-license-section");
+  const licenseEl = document.getElementById("project-modal-license");
+  const linkAmd = document.getElementById("project-modal-link-amd64");
+  const linkArm = document.getElementById("project-modal-link-arm64");
+  const linkRel = document.getElementById("project-modal-link-releases");
+
+  if (
+    !kindEl ||
+    !titleEl ||
+    !descEl ||
+    !dockerSection ||
+    !dockerEl ||
+    !binariesSection ||
+    !licenseSection ||
+    !licenseEl ||
+    !(linkAmd instanceof HTMLAnchorElement) ||
+    !(linkArm instanceof HTMLAnchorElement) ||
+    !(linkRel instanceof HTMLAnchorElement)
+  ) {
+    return;
+  }
+
+  const ui = {
+    dialog: projectModal as HTMLDialogElement,
+    kind: kindEl,
+    title: titleEl,
+    desc: descEl,
+    dockerSection,
+    docker: dockerEl,
+    binariesSection,
+    licenseSection,
+    license: licenseEl,
+    linkAmd,
+    linkArm,
+    linkRel
+  };
+
+  function openFor(name: string): void {
+    const p = byName.get(name);
+    if (!p) return;
+
+    ui.kind.textContent = p.kind;
+    ui.title.textContent = p.name;
+    ui.desc.textContent = p.description;
+
+    const dockerRef = p.dockerImage?.trim();
+    if (dockerRef) {
+      ui.docker.textContent = `docker pull ${dockerRef}`;
+      ui.dockerSection.hidden = false;
+    } else {
+      ui.docker.textContent = "";
+      ui.dockerSection.hidden = true;
+    }
+
+    const licenseText = p.licensePrice?.trim();
+    if (licenseText) {
+      ui.license.textContent = licenseText;
+      ui.licenseSection.hidden = false;
+    } else {
+      ui.license.textContent = "";
+      ui.licenseSection.hidden = true;
+    }
+
+    const showBinaries = !!(
+      p.releaseUrl?.trim() ||
+      p.binaryLinuxAmd64Url?.trim() ||
+      p.binaryLinuxArm64Url?.trim()
+    );
+    if (showBinaries) {
+      ui.binariesSection.hidden = false;
+      const rel = p.releaseUrl?.trim();
+      if (rel) {
+        ui.linkRel.href = rel;
+        ui.linkRel.hidden = false;
+      } else {
+        ui.linkRel.hidden = true;
+      }
+      const amd = p.binaryLinuxAmd64Url?.trim();
+      if (amd) {
+        ui.linkAmd.href = amd;
+        ui.linkAmd.hidden = false;
+      } else {
+        ui.linkAmd.hidden = true;
+      }
+      const arm = p.binaryLinuxArm64Url?.trim();
+      if (arm) {
+        ui.linkArm.href = arm;
+        ui.linkArm.hidden = false;
+      } else {
+        ui.linkArm.hidden = true;
+      }
+    } else {
+      ui.binariesSection.hidden = true;
+      ui.linkRel.hidden = true;
+      ui.linkAmd.hidden = true;
+      ui.linkArm.hidden = true;
+    }
+
+    ui.dialog.showModal();
+  }
+
+  document.querySelectorAll(".project-card--interactive[data-project]").forEach((card) => {
+    const name = card.getAttribute("data-project");
+    if (!name) return;
+
+    card.addEventListener("click", () => openFor(name));
+    card.addEventListener("keydown", (e) => {
+      if (!(e instanceof KeyboardEvent)) return;
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        openFor(name);
+      }
+    });
+  });
+
+  const closeBtn = ui.dialog.querySelector("[data-project-modal-close]");
+  if (closeBtn instanceof HTMLButtonElement) {
+    closeBtn.addEventListener("click", () => ui.dialog.close());
+  }
+
+  ui.dialog.addEventListener("close", () => {
+    /* Browser restores focus to the card after close; defer blur to the next macrotask so it wins. */
+    setTimeout(() => {
+      const ae = document.activeElement;
+      if (ae instanceof HTMLElement && ae.matches(".project-card--interactive[data-project]")) {
+        ae.blur();
+      }
+    }, 0);
+  });
+
+  closeDialogOnBackdropPointer(ui.dialog);
+}
+
+wireProjectModal();

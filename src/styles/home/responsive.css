@@ -49,14 +49,24 @@
     grid-auto-rows: auto;
   }
 
+  .project-grid::after {
+    content: none;
+    display: none;
+  }
+
+  /* Single column: divider above every card except the first (overrides 2-col nth-child(n+3) rule). */
+  .project-card:nth-child(n + 3) {
+    border-top: 0;
+  }
+
+  .project-card:nth-child(n + 2) {
+    border-top: var(--layout-stroke) solid var(--border);
+  }
+
   .project-card {
     min-height: 0;
     justify-content: flex-start;
     padding: var(--panel-padding-y-sm) var(--panel-padding-x-sm);
-  }
-
-  .project-card:nth-child(odd) {
-    border-right: 0;
   }
 
   .contact-body {

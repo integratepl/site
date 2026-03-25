@@ -1,6 +1,7 @@
-/* Latest news dialog */
+/* Site dialogs: latest news, project details; FAQ reuses `.news-modal` classes. */
 
-.news-modal {
+.news-modal,
+.project-modal {
   width: min(640px, calc(100% - 32px));
   padding: 0;
   border: var(--layout-stroke) solid var(--border);
@@ -9,15 +10,18 @@
   box-shadow: var(--modal-shadow);
 }
 
-.news-modal::backdrop {
+.news-modal::backdrop,
+.project-modal::backdrop {
   background: var(--modal-backdrop);
 }
 
-.news-modal-inner {
+.news-modal-inner,
+.project-modal-inner {
   padding: var(--panel-padding-y) var(--panel-padding-x);
 }
 
-.news-modal-head {
+.news-modal-head,
+.project-modal-head {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: stretch;
@@ -26,31 +30,35 @@
   border-bottom: var(--layout-stroke) solid var(--border);
 }
 
-.news-modal-head .section-label {
+.news-modal-head .section-label,
+.project-modal-head .section-label {
   margin: 0;
   padding: 12px var(--panel-padding-x);
 }
 
-.news-modal h2 {
+.news-modal h2,
+.project-modal h2 {
   margin: 0 0 16px;
   font-size: 1.1rem;
   line-height: 1.2;
   letter-spacing: -0.03em;
 }
 
-.news-modal-content {
+.news-modal-content,
+.project-modal-content {
   display: grid;
   gap: 12px;
 }
 
-.news-modal-content p {
+.news-modal-content p,
+.project-modal-content > p {
   margin: 0;
   color: var(--muted);
   font-size: 0.92rem;
   line-height: 1.6;
 }
 
-.news-close {
+.modal-close-btn {
   padding: 12px var(--panel-padding-x);
   border: 0;
   border-left: var(--layout-stroke) solid var(--border);
@@ -58,4 +66,124 @@
   color: var(--table-header-chip-fg);
   font: inherit;
   cursor: pointer;
+}
+
+/* Project modal extras */
+
+.project-modal-kind {
+  margin: 0 0 4px;
+  color: var(--muted);
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-family: var(--font-mono);
+}
+
+.project-modal-section {
+  display: grid;
+  gap: 8px;
+  padding-top: 4px;
+  border-top: 1px solid var(--border-soft);
+}
+
+/* Author `display: grid` above would override UA `[hidden]`; keep sections actually hidden. */
+.project-modal-section[hidden] {
+  display: none !important;
+}
+
+.project-modal-section:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.project-modal-subhead {
+  margin: 0;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: var(--section-label-tracking);
+  font-family: var(--font-mono);
+  color: var(--text);
+}
+
+.project-modal-hint {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.project-modal-code {
+  margin: 0;
+  padding: 10px 12px;
+  border: var(--layout-stroke) solid var(--border);
+  background: var(--panel-strong);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.45;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.project-modal-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  align-items: center;
+}
+
+.project-modal-link {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-size: 0.88rem;
+}
+
+.project-modal-link:hover {
+  color: var(--muted);
+}
+
+.project-modal-link--primary {
+  font-weight: 600;
+}
+
+#project-modal-license {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+/* FAQ modal (content from `faqItems` in data/home.ts) */
+.faq-list {
+  margin: 0;
+  display: grid;
+  gap: 16px;
+}
+
+.faq-item {
+  margin: 0;
+}
+
+.faq-question {
+  margin: 0 0 6px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.45;
+}
+
+.faq-answer {
+  margin: 0;
+  padding: 0;
+  font-size: 0.92rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.faq-empty {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.6;
 }

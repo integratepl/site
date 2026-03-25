@@ -5,6 +5,7 @@ import HomeLatest from "../components/home/HomeLatest.astro";
 import HomeProjects from "../components/home/HomeProjects.astro";
 import HomeContact from "../components/home/HomeContact.astro";
 import LatestNewsModal from "../components/home/LatestNewsModal.astro";
+import ProjectModal from "../components/home/ProjectModal.astro";
 import { buildHomeJsonLd } from "../lib/seo-jsonld";
 import { contactEmail, contactMap, contactMeta, latestNews, projects } from "../data/home";
 import "../styles/home/index.css";
@@ -48,6 +49,7 @@ const jsonLd = buildHomeJsonLd({
   </main>
 
   <LatestNewsModal news={latestNews} />
+  <ProjectModal projects={projects} />
 </Layout>
 
 <script>
