@@ -7,10 +7,35 @@ import { devSyncGithubReleasesPlugin } from "./scripts/vite-plugin-dev-sync-gith
 
 /**
  * Keystatic injects SSR routes (`/keystatic`, `/api/keystatic`), which require an adapter.
- * GitHub Pages is static-only, so CI sets `CI=true` and we skip the Keystatic integration there.
- * Locally: `npm run dev` → full admin UI at /keystatic. Production HTML is built from `content/` via the reader in `src/lib/site-content.ts`.
+ * Enable it only for `astro dev` so `astro build` / `astro check` stay static (GitHub Pages).
+ *
+ * Astro 5 `defineConfig` does not invoke a function export — a callback here breaks config merge
+ * (integrations ignored → /keystatic 404). We detect the CLI subcommand from argv instead.
+ * Do not gate on `CI` alone (often set globally). Override: `DISABLE_KEYSTATIC=1`.
  */
-const enableKeystaticUi = process.env.CI !== "true" && process.env.DISABLE_KEYSTATIC !== "1";
+const astroSubcommands = new Set([
+  "add",
+  "build",
+  "check",
+  "dev",
+  "docs",
+  "info",
+  "preferences",
+  "preview",
+  "sync",
+  "telemetry"
+]);
+
+function resolveAstroCliSubcommand() {
+  const positional = process.argv.slice(2).filter((a) => !a.startsWith("-"));
+  for (let i = positional.length - 1; i >= 0; i--) {
+    if (astroSubcommands.has(positional[i])) return positional[i];
+  }
+  return positional[0] ?? "";
+}
+
+const enableKeystaticUi =
+  resolveAstroCliSubcommand() === "dev" && process.env.DISABLE_KEYSTATIC !== "1";
 
 export default defineConfig({
   site: "https://integrate.pl",

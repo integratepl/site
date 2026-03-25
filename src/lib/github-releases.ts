@@ -104,10 +104,24 @@ const MAX_PAGES = 25;
 const devCacheTtlMs = 5 * 60 * 1000;
 const devFetchCache = new Map<string, { expires: number; data: GithubReleasesBundle }>();
 
+/**
+ * Vite forbids dynamic `import.meta.env` access (e.g. optional chaining). Use a static
+ * `import.meta.env.DEV` read. In Node/tsx (sync CLI) `import.meta.env` may be missing — catch and
+ * treat as non-dev (no in-memory cache).
+ */
+function isViteDev(): boolean {
+  try {
+    return import.meta.env.DEV === true;
+  } catch {
+    return false;
+  }
+}
+
 export async function fetchAllReleases(
   githubRepo: string | null | undefined,
   token?: string | null
 ): Promise<GithubReleasesBundle | null> {
+  const isDev = isViteDev();
   const parsed = parseGithubOwnerRepo(githubRepo);
   if (!parsed) return null;
 
@@ -115,7 +129,7 @@ export async function fetchAllReleases(
   const t = token?.trim();
   const cacheKey = owner + "/" + repo + ":" + (t ? "auth" : "anon");
 
-  if (import.meta.env.DEV) {
+  if (isDev) {
     const hit = devFetchCache.get(cacheKey);
     if (hit && hit.expires > Date.now()) return hit.data;
   }
@@ -126,7 +140,7 @@ export async function fetchAllReleases(
   };
 
   function memo(bundle: GithubReleasesBundle): GithubReleasesBundle {
-    if (import.meta.env.DEV) {
+    if (isDev) {
       devFetchCache.set(cacheKey, { expires: Date.now() + devCacheTtlMs, data: bundle });
     }
     return bundle;
