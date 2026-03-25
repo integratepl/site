@@ -1,6 +1,9 @@
 import type { GithubReleaseAsset, GithubReleaseInfo } from "../data/home";
 
-/** Normalize Keystatic `releasesFromGithub` rows; `htmlUrl` / Docker base are filled at build from `githubRepo` + tag. */
+/**
+ * Normalize Keystatic `releasesFromGithub` rows; `htmlUrl` / Docker base are filled at build from `githubRepo` + tag.
+ * API-shaped rows from `fetchAllReleases` are a separate path — both are merged via `applyGithubRepoDerivedFields` in site-content.
+ */
 export function githubReleasesFromCache(raw: unknown): GithubReleaseInfo[] {
   if (!Array.isArray(raw)) return [];
   const out: GithubReleaseInfo[] = [];

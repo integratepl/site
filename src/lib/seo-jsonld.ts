@@ -1,4 +1,4 @@
-import type { ContactMeta, Project } from "../data/home";
+import type { ContactMap, ContactMeta, Project } from "../data/home";
 
 export type HomeJsonLdParams = {
   siteHref: string;
@@ -8,9 +8,14 @@ export type HomeJsonLdParams = {
   projects: Project[];
   contactMeta: ContactMeta;
   contactEmail: string;
+  /** Map marker coordinates from CMS (`contact` singleton); keeps `geo` in sync with the homepage map. */
+  contactMap: ContactMap;
 };
 
-/** JSON-LD @graph for homepage: Organization, WebSite, WebPage, ItemList (projects). */
+/**
+ * JSON-LD @graph for homepage: Organization, WebSite, WebPage, ItemList (projects).
+ * Postal address and VAT are fixed legal/registry data; map coordinates come from `contactMap` (CMS).
+ */
 export function buildHomeJsonLd(p: HomeJsonLdParams): string {
   const site = p.siteHref.replace(/\/$/, "");
   const orgId = `${site}/#organization`;
@@ -32,8 +37,8 @@ export function buildHomeJsonLd(p: HomeJsonLdParams): string {
     vatID: "PL9161390382",
     geo: {
       "@type": "GeoCoordinates",
-      latitude: 51.53194,
-      longitude: 17.27548
+      latitude: p.contactMap.lat,
+      longitude: p.contactMap.lng
     },
     sameAs: ["https://github.com/integratepl"],
     contactPoint: {

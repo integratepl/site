@@ -2,6 +2,7 @@ import { createReader } from "@keystatic/core/reader";
 import type { ContactMap, ContactMeta, FaqItem, LatestNews, Project } from "../data/home";
 import keystaticConfig from "../../keystatic.config";
 import { applyGithubRepoDerivedFields, fetchAllReleases, releasesPageUrlForRepo } from "./github-releases";
+import { githubTokenFromEnv } from "./gh-env";
 import { githubReleasesFromCache } from "./releases-cache";
 
 const reader = createReader(process.cwd(), keystaticConfig);
@@ -9,11 +10,6 @@ const reader = createReader(process.cwd(), keystaticConfig);
 function optText(value: string | null | undefined): string | undefined {
   const t = value?.trim();
   return t ? t : undefined;
-}
-
-function ghToken(): string | undefined {
-  const t = process.env.GITHUB_TOKEN?.trim() || process.env.GH_TOKEN?.trim();
-  return t || undefined;
 }
 
 function projectDisplayName(slugField: unknown, collectionSlug: string): string {
@@ -31,7 +27,7 @@ function projectDisplayName(slugField: unknown, collectionSlug: string): string 
 /** Homepage + JSON-LD */
 export async function getProjects(): Promise<Project[]> {
   const rows = await reader.collections.projects.all();
-  const token = ghToken();
+  const token = githubTokenFromEnv();
 
   const enriched = await Promise.all(
     rows.map(async ({ slug: collectionSlug, entry }) => {

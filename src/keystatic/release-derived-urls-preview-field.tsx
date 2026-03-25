@@ -1,7 +1,11 @@
 import type { CSSProperties } from "react";
 import { useEffect, useRef, useState } from "react";
 
-import { defaultGhcrImageBase, githubReleaseTagPageUrl } from "../lib/github-releases";
+import {
+  defaultGhcrImageBase,
+  githubReleaseTagPageUrl,
+  parseGithubOwnerRepo
+} from "../lib/github-releases";
 
 function labelForInput(input: Element, root: Element): string {
   const id = input.getAttribute("id");
@@ -72,7 +76,7 @@ export function releaseDerivedUrlsPreviewField() {
           }
           const repoRaw = findGitHubRepoInForm(formRoot);
           const tag = findGitTagBeforeHost(host);
-          const parsed = repoRaw.match(/^([^/\s]+)\/([^/\s]+)$/);
+          const parsed = parseGithubOwnerRepo(repoRaw);
           if (!repoRaw) {
             setState({ kind: "hint", message: "—" });
             return;
@@ -85,8 +89,7 @@ export function releaseDerivedUrlsPreviewField() {
             setState({ kind: "hint", message: "Set Git tag on this row." });
             return;
           }
-          const owner = parsed[1]!;
-          const repo = parsed[2]!;
+          const { owner, repo } = parsed;
           const base = defaultGhcrImageBase(repoRaw);
           setState({
             kind: "ok",

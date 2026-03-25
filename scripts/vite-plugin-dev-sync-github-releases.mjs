@@ -35,8 +35,9 @@ export function devSyncGithubReleasesPlugin() {
         try {
           const modPath = path.join(server.config.root, "src/lib/sync-project-releases.ts");
           const mod = await server.ssrLoadModule(modPath);
-          const token =
-            process.env.GITHUB_TOKEN?.trim() || process.env.GH_TOKEN?.trim() || undefined;
+          const ghEnvPath = path.join(server.config.root, "src/lib/gh-env.ts");
+          const { githubTokenFromEnv } = await server.ssrLoadModule(ghEnvPath);
+          const token = githubTokenFromEnv();
           const result = await mod.syncProjectReleasesForSlug(server.config.root, slug, token);
           res.statusCode = 200;
           res.setHeader("Content-Type", "application/json");
