@@ -1,0 +1,22 @@
+---
+import type { LatestNews } from "../../data/home";
+
+interface Props {
+  news: LatestNews;
+}
+
+const { news } = Astro.props;
+---
+
+<dialog id="latest-news-modal" class="news-modal">
+  <div class="news-modal-inner">
+    <div class="news-modal-head">
+      <p class="section-label">Latest</p>
+      <button type="button" class="news-close" aria-label="Close news modal">Close</button>
+    </div>
+    <h2>{news.title}</h2>
+    <div class="news-modal-content">
+      {news.content.map((paragraph) => <p>{paragraph}</p>)}
+    </div>
+  </div>
+</dialog>

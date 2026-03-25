@@ -1,0 +1,27 @@
+---
+import type { Project } from "../../data/home";
+import SectionHeadSplit from "./SectionHeadSplit.astro";
+
+interface Props {
+  projects: Project[];
+}
+
+const { projects } = Astro.props;
+---
+
+<section id="projects" class="projects panel">
+  <SectionHeadSplit title="Projects" />
+  <div class="project-grid">
+    {
+      projects.map((project) => (
+        <article class="project-card" id={project.name}>
+          <div class="project-top">
+            <span class="project-kind">{project.kind}</span>
+            <h2>{project.name}</h2>
+          </div>
+          <p>{project.description}</p>
+        </article>
+      ))
+    }
+  </div>
+</section>

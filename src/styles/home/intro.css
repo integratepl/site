@@ -1,0 +1,79 @@
+/* Hero / intro block */
+
+.intro {
+  grid-column: span 1;
+  min-height: var(--intro-min-height);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+.intro::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(var(--intro-overlay-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--intro-overlay-grid) 1px, transparent 1px);
+  background-size: var(--intro-overlay-size) var(--intro-overlay-size);
+  opacity: var(--intro-overlay-opacity);
+  pointer-events: none;
+}
+
+.intro h1 {
+  margin: 0;
+  max-width: 14ch;
+  font-size: clamp(1.45rem, 2.4vw, 2.35rem);
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+  position: relative;
+  z-index: 1;
+}
+
+.lede {
+  margin: 0;
+  max-width: 24rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  position: relative;
+  z-index: 1;
+}
+
+.eyebrow,
+.section-label {
+  margin: 0 0 12px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: var(--section-label-tracking);
+  font-size: var(--section-label-size);
+  font-family: var(--font-mono);
+  position: relative;
+  z-index: 1;
+}
+
+.intro .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);
+}
+
+.intro .eyebrow::before {
+  content: "";
+  flex-shrink: 0;
+  width: var(--eyebrow-bar-width);
+  min-height: 0.95rem;
+  height: 1.2em;
+  align-self: center;
+  border-radius: var(--eyebrow-bar-radius);
+  background: linear-gradient(
+    165deg,
+    var(--brand-accent-a) 0%,
+    var(--brand-accent-b) 52%,
+    var(--brand-accent-c) 100%
+  );
+  box-shadow: var(--eyebrow-bar-shadow);
+}

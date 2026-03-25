@@ -1,0 +1,151 @@
+/* Contact section + map + meta card */
+
+.contact {
+  grid-column: span 2;
+  padding: 0;
+}
+
+.contact-body {
+  min-height: var(--section-row-height);
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+  align-items: stretch;
+}
+
+.contact-copy {
+  min-width: 0;
+  padding: 10px var(--panel-padding-x);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.contact-meta {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border-left: var(--layout-stroke) solid var(--border);
+  position: relative;
+  overflow: hidden;
+  min-height: var(--contact-meta-min-height);
+  background: var(--contact-map-bg);
+}
+
+.contact-map-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 1;
+}
+
+.contact-map-host {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 200px;
+  background: var(--contact-map-bg);
+}
+
+.contact-map-wrap .leaflet-tile-pane {
+  filter: var(--contact-map-filter);
+  -webkit-filter: var(--contact-map-filter);
+}
+
+.contact-map-wrap .leaflet-control-attribution {
+  font-size: var(--leaflet-attribution-size);
+  line-height: 1.2;
+  margin: 0 4px 4px 0;
+  padding: 0;
+  max-width: none;
+  white-space: nowrap;
+  background: transparent !important;
+  color: var(--muted);
+  border: 0 !important;
+  box-shadow: none !important;
+  border-radius: 0;
+  pointer-events: auto;
+}
+
+.contact-map-wrap .leaflet-control-attribution a {
+  color: var(--muted);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.contact-map-wrap .leaflet-control-attribution a:hover {
+  color: var(--text);
+}
+
+.contact-meta-inner {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  z-index: 2;
+  max-width: min(calc(100% - 20px), 20rem);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.96);
+  border: var(--layout-stroke) solid var(--border);
+  box-shadow: var(--shell-shadow);
+}
+
+.contact-meta-name {
+  margin: 0;
+  font-size: 0.96rem;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+  color: var(--text);
+}
+
+.contact-meta-line,
+.contact .cta {
+  font-size: var(--contact-card-body-size);
+  line-height: var(--contact-card-body-leading);
+  color: var(--contact-card-body-text);
+}
+
+.contact-meta-line {
+  margin: 0;
+}
+
+.contact h2 {
+  margin: 0 0 4px;
+  font-size: 0.96rem;
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+  max-width: 22ch;
+}
+
+.contact-copy p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+  font-size: 0.9rem;
+}
+
+.contact .cta {
+  display: inline-flex;
+  margin-top: 12px;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  border: var(--layout-stroke) solid var(--border);
+  background: var(--bg);
+  box-shadow: var(--shell-shadow);
+  font-weight: 600;
+}
+
+.contact .cta:hover {
+  background: var(--panel-strong);
+}
+
+.contact .cta:focus-visible {
+  outline: var(--layout-stroke) solid var(--text);
+  outline-offset: var(--layout-stroke);
+}

@@ -1,0 +1,22 @@
+/* Home: grid shell and panel rhythm */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+}
+
+.panel {
+  padding: var(--panel-padding-y) var(--panel-padding-x);
+}
+
+/* One horizontal rule per seam between top-row sections */
+.intro,
+.latest {
+  border-bottom: var(--layout-stroke) solid var(--border);
+}
+
+.projects,
+.contact {
+  border-bottom: 0;
+}

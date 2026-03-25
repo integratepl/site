@@ -1,0 +1,25 @@
+---
+import type { LatestNews } from "../../data/home";
+
+interface Props {
+  news: LatestNews;
+}
+
+const { news } = Astro.props;
+---
+
+<section id="latest" class="latest panel">
+  <p class="section-label">Latest</p>
+  <article class="news-item">
+    <h2 class="news-title">{news.title}</h2>
+    <p class="news-teaser">{news.teaser}</p>
+    <button
+      type="button"
+      class="news-trigger"
+      aria-haspopup="dialog"
+      aria-controls="latest-news-modal"
+    >
+      Read more
+    </button>
+  </article>
+</section>

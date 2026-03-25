@@ -1,0 +1,52 @@
+/* Latest / news teaser (inline; modal is separate) */
+
+.latest {
+  grid-column: span 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 14px;
+  min-height: var(--intro-min-height);
+  border-left: var(--layout-stroke) solid var(--border);
+}
+
+.news-item {
+  display: grid;
+  gap: 12px;
+}
+
+.news-title {
+  margin: 0;
+  font-size: 1.02rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  max-width: 24ch;
+}
+
+.news-teaser {
+  margin: 0;
+  max-width: 30rem;
+  color: var(--muted);
+  line-height: 1.55;
+  font-size: 0.92rem;
+}
+
+.news-trigger {
+  width: fit-content;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.84rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+}
+
+.news-trigger:hover {
+  color: var(--muted);
+}

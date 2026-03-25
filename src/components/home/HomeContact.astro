@@ -1,0 +1,38 @@
+---
+import type { ContactMap, ContactMeta } from "../../data/home";
+import { contactEmail } from "../../data/home";
+import SectionHeadSplit from "./SectionHeadSplit.astro";
+
+interface Props {
+  meta: ContactMeta;
+  map: ContactMap;
+}
+
+const { meta, map } = Astro.props;
+---
+
+<section id="contact" class="contact panel">
+  <SectionHeadSplit title="Contact" />
+  <div class="contact-body">
+    <div class="contact-copy">
+      <h2>Interested in our projects?</h2>
+      <p>Get in touch to talk about your plans and how we can help.</p>
+      <a class="cta" href={`mailto:${contactEmail}`}>{contactEmail}</a>
+    </div>
+    <aside class="contact-meta" aria-label="Company">
+      <div class="contact-map-wrap" aria-hidden="true">
+        <div
+          id="contact-map-host"
+          class="contact-map-host"
+          data-lat={map.lat}
+          data-lng={map.lng}
+          data-zoom={map.zoom}
+        />
+      </div>
+      <div class="contact-meta-inner">
+        <p class="contact-meta-name">{meta.company}</p>
+        {meta.lines.map((line) => <p class="contact-meta-line">{line}</p>)}
+      </div>
+    </aside>
+  </div>
+</section>
